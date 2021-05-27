@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Class C IPv4 Subnetting App</title>
+</head>
+
+<body class="container-fluid">
+    <div class="row p-3">
+
+        <header class="col-12 m-2 p-2">
+            <h1>Subnetting App</h1>
+            <i>This application determines the list of possible subnets for a given Class C IPv4 address and number of
+                borrowed bits for subnet mask.</i>
+        </header>
+
+        <section class="col-8">
+            <div class="m-3">
+                <label class="" for="ip-address">IP address (IPv4 Class C):</label>
+                <input class="form-control" id="ip-address" type="text" placeholder="'200.100.50.0'">
+            </div>
+            <div class="m-3">
+                <label class="" for="borrowed-bits">Number of borrowed bits for Subnet Mask:</label>
+                <select class="form-control" name="" id="borrowed-bits">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                </select>
+            </div>
+            <button id="buttonSubmit" type="button" class="btn btn-dark m-3">Submit</button>
+        </section>
+        <section class="col-12 m-4" id="results"></section>
+        <script src="app.js"></script>
+    </div>
+    <footer class="col-12 p-2">
+        <p>
+            Based on the work of Ing. Alexander Garcia. Universidad EAN (2021)
+        </p>
+
+    </footer>
+</body>
+
+</html>
