@@ -21,6 +21,7 @@ class IPAddress {
         this.maxSubnets = this.setMaxSubnets(borrowedBits)
         this.maxHosts = this.setMaxHosts(borrowedBits)
         this.subnets = this.setSubnets(this.maxSubnets, this.netName, this.maxHosts)
+        this.belongsTo = this.belongsToSubnet(this.address, this.subnets)
     }
 
     setAddress(address) {
@@ -183,7 +184,7 @@ class IPAddress {
         }
     }
 
-    printSubnetsList() {
+    printSubnetsList(subnetNumber) {
         try {
             let messageHead = `
             <table class="table table-hover">
@@ -205,12 +206,12 @@ class IPAddress {
             let messageBody = ""
             this.subnets.forEach(sn => {
                 messageBody += `
-            <tr>
+            <tr class=${subnetNumber===sn.number ? "table-info" : ""}>
             <th scope="row">${sn.number}</th>
-            <td>${String(sn.subnetName).replaceAll(',','.')}</td>
-            <td>${String(sn.firstIP).replaceAll(',','.')}</td>
-            <td>${String(sn.lastIP).replaceAll(',','.')}</td>
-            <td>${String(sn.broadcast).replaceAll(',','.')}</td>
+            <td>${String(sn.subnetName).replaceAll(',', '.')}</td>
+            <td>${String(sn.firstIP).replaceAll(',', '.')}</td>
+            <td>${String(sn.lastIP).replaceAll(',', '.')}</td>
+            <td>${String(sn.broadcast).replaceAll(',', '.')}</td>
             </tr>
             `
             })
@@ -219,6 +220,23 @@ class IPAddress {
         catch (e) {
             console.log(e)
         }
+    }
+
+    belongsToSubnet(address, subnets) {
+
+        let belongsTo
+        subnets.forEach(sn => {
+            let itsHere = address[3] >= sn.firstIP[3] && address[3] <= sn.lastIP[3] ||
+                address[3] === sn.subnetName[3] || address[3] === sn.broadcast[3]
+
+            if (itsHere) {
+                belongsTo = {
+                    number: sn.number,
+                    name: sn.subnetName
+                }
+            }
+        })
+        return belongsTo
     }
 }
 
@@ -231,10 +249,11 @@ buttonSubmit.addEventListener('click', e => {
     let subnetsList = document.getElementById('results')
 
     let ip = new IPAddress(ipAddress, borrowedBits)
-    document.getElementById('subnet-mask').value = String(ip.subnetMask).replaceAll(',','.')
-    document.getElementById('max-subnets').value = String(ip.maxSubnets).replaceAll(',','.')
-    document.getElementById('max-hosts').value = String(ip.maxHosts).replaceAll(',','.')
-    subnetsList.innerHTML = ip.printSubnetsList()
+    document.getElementById('subnet-mask').value = String(ip.subnetMask).replaceAll(',', '.')
+    document.getElementById('max-subnets').value = String(ip.maxSubnets).replaceAll(',', '.')
+    document.getElementById('max-hosts').value = String(ip.maxHosts).replaceAll(',', '.')
+    subnetsList.innerHTML = ip.printSubnetsList(ip.belongsTo.number)
+    document.getElementById('belongs-to').value = `#${ip.belongsTo.number} (` + String(ip.belongsTo.name).replaceAll(',', '.') + ')'
 })
 
 

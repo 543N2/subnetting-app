@@ -21,12 +21,12 @@
 
         <section class="col-auto d-flex flex-column flex-wrap">
 
-            <div class="m-3 d-flex align-items-center">
+            <div class="m-1 d-flex align-items-center">
                 <label class="" for="ip-address">IPv4 address:</label>
                 <input class="form-control mx-2" id="ip-address" type="text" placeholder="IP address (IPv4 Class C)">
             </div>
 
-            <div class="m-3 d-flex align-items-center">
+            <div class="m-1 d-flex align-items-center">
                 <label for="borrowed-bits">Borrowed bits</label>
                 <select class="form-control mx-2" name="" id="borrowed-bits">
                     <option value="0">0</option>
@@ -39,22 +39,27 @@
                 </select>
             </div>
 
-            <div class="m-3 d-flex align-items-center">
+            <div class="m-1 d-flex align-items-center">
                 <label for="subnet-mask">Subnet Mask:</label>
-                <input id="subnet-mask" class="form-control mx-2 bg-light" placeholder="Subnet Mask" type="text" disabled>
+                <input id="subnet-mask" class="form-control mx-2 bg-light" placeholder="Subnet Mask..." type="text" disabled>
             </div>
 
-            <div class="m-3 d-flex align-items-center">
+            <div class="m-1 d-flex align-items-center">
+                <label for="belongs-to">Belongs to Subnet:</label>
+                <input id="belongs-to" class="form-control mx-2 bg-light" placeholder="Belongs to Subnet..." type="text" disabled>
+            </div>
+
+            <div class="m-1 d-flex align-items-center">
                 <label for=""># of Subnets:</label>
-                <input id="max-subnets" class="form-control mx-2 bg-light" type="number" placeholder="# subnets" disabled>
+                <input id="max-subnets" class="form-control mx-2 bg-light" type="number" placeholder="# subnets..." disabled>
             </div>
 
-            <div class="m-3 d-flex align-items-center">
+            <div class="m-1 d-flex align-items-center">
                 <label for=""># of Hosts per subnet:</label>
-                <input id="max-hosts" class="form-control mx-2 bg-light" type="number" placeholder="# Hosts/subnet" disabled>
+                <input id="max-hosts" class="form-control mx-2 bg-light" type="number" placeholder="# Hosts/subnet..." disabled>
             </div>
 
-            <button class="btn btn-dark m-3" id="buttonSubmit" type="button">Submit</button>
+            <button class="m-1 btn btn-dark" id="buttonSubmit" type="button">Submit</button>
         </section>
 
 
