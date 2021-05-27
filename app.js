@@ -24,117 +24,168 @@ class IPAddress {
     }
 
     setAddress(address) {
-        let firstOctet = parseInt(address.split('.')[0])
-        let secondOctet = parseInt(address.split('.')[1])
-        let thirdOctet = parseInt(address.split('.')[2])
-        let fourthOctet = parseInt(address.split('.')[3])
-        return [firstOctet, secondOctet, thirdOctet, fourthOctet]
+        try {
+            let validAddress = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(address)
+            let result
+            if (validAddress) {
+                let firstOctet = parseInt(address.split('.')[0])
+                let secondOctet = parseInt(address.split('.')[1])
+                let thirdOctet = parseInt(address.split('.')[2])
+                let fourthOctet = parseInt(address.split('.')[3])
+                result = [firstOctet, secondOctet, thirdOctet, fourthOctet]
+            }
+            else {
+                alert("You have entered an invalid IP address!")
+                result = null
+            }
+            return result
+        }
+        catch (e) {
+            console.log(e)
+        }
     }
 
     setClass(address) {
-        let classA = address[0] >= 1 && address[0] <= 127
-        let classB = address[0] >= 128 && address[0] <= 191
-        let classC = address[0] >= 192 && address[0] <= 223
-        let classD = address[0] >= 224 && address[0] <= 239
-        let classE = address[0] >= 240 && address[0] <= 255
-        let IPClass
-        if (classA) {
-            IPClass = 'A'
+        try {
+            let classA = address[0] >= 1 && address[0] <= 127
+            let classB = address[0] >= 128 && address[0] <= 191
+            let classC = address[0] >= 192 && address[0] <= 223
+            let classD = address[0] >= 224 && address[0] <= 239
+            let classE = address[0] >= 240 && address[0] <= 255
+            let IPClass
+            if (classA) {
+                IPClass = 'A'
+            }
+            else if (classB) {
+                IPClass = 'B'
+            }
+            else if (classC) {
+                IPClass = 'C'
+            }
+            else if (classD) {
+                IPClass = 'D'
+            }
+            else if (classE) {
+                IPClass = 'E'
+            }
+            else {
+                IPClass = null
+            }
+            return IPClass
         }
-        else if (classB) {
-            IPClass = 'B'
+        catch (e) {
+            console.log(e)
         }
-        else if (classC) {
-            IPClass = 'C'
-        }
-        else if (classD) {
-            IPClass = 'D'
-        }
-        else if (classE) {
-            IPClass = 'E'
-        }
-        else {
-            IPClass = null
-        }
-        return IPClass
     }
 
     setSubnetMask(borrowedBits) {
-        let maskValue
-        let valid = borrowedBits >= 0 && borrowedBits <= 6
-        if (valid) {
-            borrowedBits === 0 ? maskValue = 0 : maskValue = 2 ** 8 - 2 ** (8 - borrowedBits)
-            return [255, 255, 255, maskValue]
+        try {
+            let maskValue
+            let valid = borrowedBits >= 0 && borrowedBits <= 6
+            if (valid) {
+                borrowedBits === 0 ? maskValue = 0 : maskValue = 2 ** 8 - 2 ** (8 - borrowedBits)
+                return [255, 255, 255, maskValue]
+            }
+            else {
+                return null
+            }
         }
-        else {
-            return null
+        catch (e) {
+            console.log(e)
         }
     }
 
     setMaxSubnets(borrowedBits) {
-        let maxSubnets
-        let valid = borrowedBits >= 0 && borrowedBits <= 6
-        if (valid) {
-            borrowedBits === 0 ? maxSubnets = 1 : maxSubnets = 2 ** borrowedBits
+        try {
+            let maxSubnets
+            let valid = borrowedBits >= 0 && borrowedBits <= 6
+            if (valid) {
+                borrowedBits === 0 ? maxSubnets = 1 : maxSubnets = 2 ** borrowedBits
+            }
+            else {
+                maxSubnets = null
+            }
+            return maxSubnets
         }
-        else {
-            maxSubnets = null
+        catch (e) {
+            console.log(e)
         }
-        return maxSubnets
     }
 
     setMaxHosts(borrowedBits) {
-        let maxHosts
-        let valid = borrowedBits >= 0 && borrowedBits <= 6
-        if (valid) {
-            maxHosts = 2 ** (8 - borrowedBits) - 2
+        try {
+            let maxHosts
+            let valid = borrowedBits >= 0 && borrowedBits <= 6
+            if (valid) {
+                maxHosts = 2 ** (8 - borrowedBits) - 2
+            }
+            else {
+                maxHosts = null
+            }
+            return maxHosts
         }
-        else {
-            maxHosts = null
+        catch (e) {
+            console.log(e)
         }
-        return maxHosts
     }
 
     setNetName(address) {
-        let netName
-        netName = [...address]
-        netName.splice(3, 1, 0)
-        return netName
+        try {
+            let netName
+            netName = [...address]
+            netName.splice(3, 1, 0)
+            return netName
+        }
+        catch (e) {
+            console.log(e)
+        }
     }
 
     setBroadcast(address) {
-        let broadcast
-        broadcast = [...address]
-        broadcast.splice(3, 1, 255)
-        return broadcast
+        try {
+            let broadcast
+            broadcast = [...address]
+            broadcast.splice(3, 1, 255)
+            return broadcast
+        }
+        catch (e) {
+            console.log(e)
+        }
     }
 
     setSubnets(max, netName, numberOfHosts) {
-        let subnets = []
-        let host = 0
-        for (let number = 0; number < max; number++) {
-            let subnetName = [...netName]
-            let firstIP = [...netName]
-            let lastIP = [...netName]
-            let broadcast = [...netName]
-            subnetName.splice(3, 1, host)
-            firstIP.splice(3, 1, host + 1)
-            lastIP.splice(3, 1, host + numberOfHosts)
-            broadcast.splice(3, 1, host + 1 + numberOfHosts)
-            subnets.push({
-                number,
-                subnetName,
-                firstIP,
-                lastIP,
-                broadcast,
-            })
-            host = host + numberOfHosts + 2
+        try {
+
+            let subnets = []
+            let host = 0
+            for (let number = 0; number < max; number++) {
+                let subnetName = [...netName]
+                let firstIP = [...netName]
+                let lastIP = [...netName]
+                let broadcast = [...netName]
+                subnetName.splice(3, 1, host)
+                firstIP.splice(3, 1, host + 1)
+                lastIP.splice(3, 1, host + numberOfHosts)
+                broadcast.splice(3, 1, host + 1 + numberOfHosts)
+                subnets.push({
+                    number,
+                    subnetName,
+                    firstIP,
+                    lastIP,
+                    broadcast,
+                })
+                host = host + numberOfHosts + 2
+            }
+            return subnets
         }
-        return subnets
+        catch (e) {
+            console.log(e)
+        }
     }
 
-    printSubnets() {
-        let messageHead = `
+    printSubnetsList() {
+        try {
+            let messageHead = `
             <table class="table table-hover">
             <thead>
                 <tr>
@@ -147,33 +198,43 @@ class IPAddress {
             </thead>
             <tbody>
             `
-        let messageTail = `
+            let messageTail = `
             </tbody>
             </table>
             `
-        let messageBody = ""
-        this.subnets.forEach(sn => {
-            messageBody += `
+            let messageBody = ""
+            this.subnets.forEach(sn => {
+                messageBody += `
             <tr>
             <th scope="row">${sn.number}</th>
-            <td>${sn.subnetName}</td>
-            <td>${sn.firstIP}</td>
-            <td>${sn.lastIP}</td>
-            <td>${sn.broadcast}</td>
+            <td>${String(sn.subnetName).replaceAll(',','.')}</td>
+            <td>${String(sn.firstIP).replaceAll(',','.')}</td>
+            <td>${String(sn.lastIP).replaceAll(',','.')}</td>
+            <td>${String(sn.broadcast).replaceAll(',','.')}</td>
             </tr>
             `
-        })
-        return messageHead + messageBody + messageTail
+            })
+            return messageHead + messageBody + messageTail
+        }
+        catch (e) {
+            console.log(e)
+        }
     }
 }
 
-let buttonSubmit = document.getElementById('buttonSubmit')
 
+let buttonSubmit = document.getElementById('buttonSubmit')
 buttonSubmit.addEventListener('click', e => {
 
-    let ipInput = document.getElementById('ip-address').value
-    let borrowedBitsInput = document.getElementById('borrowed-bits').value
-    let printer = document.getElementById('results')
-    let ip = new IPAddress(ipInput, borrowedBitsInput)
-    printer.innerHTML = ip.printSubnets()
+    let ipAddress = document.getElementById('ip-address').value
+    let borrowedBits = document.getElementById('borrowed-bits').value
+    let subnetsList = document.getElementById('results')
+
+    let ip = new IPAddress(ipAddress, borrowedBits)
+    document.getElementById('subnet-mask').value = String(ip.subnetMask).replaceAll(',','.')
+    document.getElementById('max-subnets').value = String(ip.maxSubnets).replaceAll(',','.')
+    document.getElementById('max-hosts').value = String(ip.maxHosts).replaceAll(',','.')
+    subnetsList.innerHTML = ip.printSubnetsList()
 })
+
+

@@ -19,14 +19,16 @@
                 borrowed bits for subnet mask.</i>
         </header>
 
-        <section class="col-8">
-            <div class="m-3">
-                <label class="" for="ip-address">IP address (IPv4 Class C):</label>
-                <input class="form-control" id="ip-address" type="text" placeholder="'200.100.50.0'">
+        <section class="col-auto d-flex flex-column flex-wrap">
+
+            <div class="m-3 d-flex align-items-center">
+                <label class="" for="ip-address">IPv4 address:</label>
+                <input class="form-control mx-2" id="ip-address" type="text" placeholder="IP address (IPv4 Class C)">
             </div>
-            <div class="m-3">
-                <label class="" for="borrowed-bits">Number of borrowed bits for Subnet Mask:</label>
-                <select class="form-control" name="" id="borrowed-bits">
+
+            <div class="m-3 d-flex align-items-center">
+                <label for="borrowed-bits">Borrowed bits</label>
+                <select class="form-control mx-2" name="" id="borrowed-bits">
                     <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -36,11 +38,30 @@
                     <option value="6">6</option>
                 </select>
             </div>
-            <button id="buttonSubmit" type="button" class="btn btn-dark m-3">Submit</button>
+
+            <div class="m-3 d-flex align-items-center">
+                <label for="subnet-mask">Subnet Mask:</label>
+                <input id="subnet-mask" class="form-control mx-2 bg-light" placeholder="Subnet Mask" type="text" disabled>
+            </div>
+
+            <div class="m-3 d-flex align-items-center">
+                <label for=""># of Subnets:</label>
+                <input id="max-subnets" class="form-control mx-2 bg-light" type="number" placeholder="# subnets" disabled>
+            </div>
+
+            <div class="m-3 d-flex align-items-center">
+                <label for=""># of Hosts per subnet:</label>
+                <input id="max-hosts" class="form-control mx-2 bg-light" type="number" placeholder="# Hosts/subnet" disabled>
+            </div>
+
+            <button class="btn btn-dark m-3" id="buttonSubmit" type="button">Submit</button>
         </section>
-        <section class="col-12 m-4" id="results"></section>
+
+
+        <section class="col m-4" id="results"></section>
         <script src="app.js"></script>
     </div>
+
     <footer class="col-12 p-2">
         <p>
             Based on the work of Ing. Alexander Garcia. Universidad EAN (2021)
